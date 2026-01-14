@@ -1,6 +1,7 @@
 import "./style.css";
 import { MeteoService } from "./meteo-service.js";
-import { Chart, LineController, CategoryScale, LinearScale, PointElement, LineElement} from "chart.js";
+import { Chart, LineController, CategoryScale, LinearScale, PointElement, LineElement, TimeScale} from "chart.js";
+import 'chartjs-adapter-moment';
 
 const service = new MeteoService();
 
@@ -84,7 +85,7 @@ function testChart(canvasId, dataPoints) {
     //{x:"2026-01-13T01:00", y:8},
     //{x:"2026-01-13T02:00", y:7},...]
 
-    Chart.register(LineController, CategoryScale, LinearScale, PointElement, LineElement);
+    Chart.register(LineController, CategoryScale, LinearScale, PointElement, LineElement, TimeScale);
 
     const labels = []
 
@@ -102,6 +103,13 @@ function testChart(canvasId, dataPoints) {
     const config = {
         type: 'line',
         data: data,
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                }
+            }
+        }
     };
 
     const canvas = document.getElementById(canvasId)
